@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:ar_map_project/firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ar_map_project/app_router.dart';
+import 'package:ar_map_project/features/home/presentation/pages/home_screen.dart';
 
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,7 +21,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Travel App',
+      title: 'AR map',
+      onGenerateRoute: AppRouter.generateRoute,
+      initialRoute: '/',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
@@ -21,7 +32,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const Center(child: Text("this is the first page")),
+      home: HomeScreen(),
     );
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "145600083145",
+    "project_id": "armap-e1537",
+    "storage_bucket": "armap-e1537.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145600083145:android:deae28d420c58a0b784918",
+        "android_client_info": {
+          "package_name": "com.twentymikeyone.ar_map"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHQi2B40aa0LVgZrCXJQXDEY8wXMpJUpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
