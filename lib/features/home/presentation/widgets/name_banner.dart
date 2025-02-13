@@ -8,13 +8,15 @@ class NameBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenDeimensions.width,
-      margin: EdgeInsets.symmetric(vertical: 20),
+      width: ScreenDimensions.width,
+      margin: EdgeInsets.symmetric(vertical: 52),
       child: Text(
-        "ar map app",
+        "AR MAP APP",
+        textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 30,
-          fontWeight: FontWeight.bold, 
+          fontWeight: FontWeight.bold,
+          
         ),
         ),
       

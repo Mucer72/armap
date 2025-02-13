@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenDeimensions.initialize(context);
+    ScreenDimensions.initialize(context);
     return MaterialApp(
       title: 'AR map',
       onGenerateRoute: AppRouter.generateRoute,

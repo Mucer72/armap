@@ -15,7 +15,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return Container(
       child: CupertinoSearchTextField(),
-      width: ScreenDeimensions.width*0.9, 
+      width: ScreenDimensions.width*0.9, 
     );
   }
 }
