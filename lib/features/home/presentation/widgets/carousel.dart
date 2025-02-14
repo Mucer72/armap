@@ -33,12 +33,13 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-          height: ScreenDimensions.height * 0.4, 
-          child: PageView(
-            controller: _pageController,
-            children: _pages,
-          ),
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      height: ScreenDimensions.height * 0.4, 
+      child: PageView(
+        controller: _pageController,
+        children: _pages,
+      ),
     );
   }
 }
