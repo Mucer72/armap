@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import 'package:ar_map_project/common/utils/sizes.dart';
 
@@ -13,9 +12,9 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CupertinoSearchTextField(),
-      width: ScreenDimensions.width*0.9, 
+    return SizedBox(
+      width: ScreenDimensions.width*0.9,
+      child: const CupertinoSearchTextField(), 
     );
   }
 }

@@ -1,0 +1,2 @@
+/Volumes/external_drive/Study/DoAnToNghiep/ar_map/android/app/.cxx/Debug/kg5c6e5h/x86/CMakeFiles/edit_cache.dir
+/Volumes/external_drive/Study/DoAnToNghiep/ar_map/android/app/.cxx/Debug/kg5c6e5h/x86/CMakeFiles/rebuild_cache.dir

@@ -14,10 +14,10 @@ class _CarouselState extends State<Carousel> {
   final PageController _pageController = PageController(initialPage: 0, viewportFraction: 0.8);
 
   final List<Widget> _pages = [
-    CarouselItem(),
-    CarouselItem(),
-    CarouselItem(),
-    CarouselItem(),
+    const CarouselItem(imageURL: "https://picsum.photos/seed/2mikey1/500/300",name: "Loc1",description: "1",),
+    const CarouselItem(imageURL: "https://picsum.photos/seed/2mikey3/500/300",name: "Loc2",description: "2",),
+    const CarouselItem(imageURL: "https://picsum.photos/seed/2mikey4/500/300",name: "Loc3",description: "3",),
+    const CarouselItem(imageURL: "https://picsum.photos/seed/2mikey2/500/300",name: "Loc4",description: "4",),
   ];
 
   @override
@@ -34,7 +34,7 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 20),
       height: ScreenDimensions.height * 0.4, 
       child: PageView(
         controller: _pageController,

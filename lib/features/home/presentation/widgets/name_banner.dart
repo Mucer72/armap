@@ -9,8 +9,8 @@ class NameBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenDimensions.width,
-      margin: EdgeInsets.symmetric(vertical: 52),
-      child: Text(
+      margin: const EdgeInsets.symmetric(vertical: 52),
+      child: const Text(
         "AR MAP APP",
         textAlign: TextAlign.center,
         style: TextStyle(
