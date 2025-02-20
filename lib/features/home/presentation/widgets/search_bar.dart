@@ -1,20 +1,27 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:ar_map_project/common/utils/sizes.dart';
+import 'package:flutter/material.dart';
 
 class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
 
-  @override
-  State<SearchBar> createState() => _SearchBarState();
+const SearchBar({super.key});
+
+@override
+State<SearchBar> createState() => _SearchBarState();
 }
 
 class _SearchBarState extends State<SearchBar> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: ScreenDimensions.width*0.9,
-      child: const CupertinoSearchTextField(), 
-    );
-  }
+final TextEditingController _controller = TextEditingController();
+
+@override
+Widget build(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 15),
+    child: CupertinoSearchTextField(
+      controller: _controller,
+      onTap: () {},
+    ),
+  );
+}
 }

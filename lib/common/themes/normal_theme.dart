@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class NormalTheme {
   static ThemeData lightTheme = ThemeData(
+    fontFamily: Platform.isIOS ? '.SF Pro Display' : 'Roboto',
     primarySwatch: Colors.blue, // Primary color
     scaffoldBackgroundColor: Colors.white, // Background color of scaffolds
     appBarTheme: const AppBarTheme( // Theme for app bars
@@ -14,6 +17,7 @@ class NormalTheme {
         color: Colors.white,
       ),
     ),
+    
     textTheme: const TextTheme( // Text styles
       headlineSmall: TextStyle( // Example text style
         fontSize: 20,
@@ -25,6 +29,7 @@ class NormalTheme {
         color: Colors.black87,
       ),
     ),
+    
     elevatedButtonTheme: ElevatedButtonThemeData( // Theme for elevated buttons
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.blue, // Button background color
@@ -33,6 +38,8 @@ class NormalTheme {
         ),
       ),
     ),
+
+   
     // ... other theme properties (e.g., colorScheme, inputDecorationTheme, etc.)
   );
 

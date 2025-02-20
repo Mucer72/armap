@@ -43,34 +43,51 @@ class CarouselItem extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: Text(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
               name,
               textAlign: TextAlign.right,
-            )
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              description,
-              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             )
           ),
           Expanded(
             flex: 2,
             child: Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+              description,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 16
+              )
+            ),
+            )
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
-                  flex:4,
+                  flex: 4,
                   child: Container(
-                  margin: EdgeInsets.only(right: 5),  
+                  margin: EdgeInsets.only(right: 10),  
                   child: CupertinoButton(
                   onPressed: (){},
                   color: CupertinoColors.quaternaryLabel,
                   borderRadius: BorderRadius.circular(15),
-                  child: Text("Add to your tour"),
+                  child: Text("Add to your tour",
+                  style: TextStyle(
+                    color: CupertinoColors.label
+                  ),
+                  ),
                 ),
                   ),),
                 Expanded(
@@ -78,12 +95,13 @@ class CarouselItem extends StatelessWidget {
                   child: CupertinoButton(
                   onPressed: (){},
                   padding: EdgeInsets.zero,
-                  color: CupertinoColors.inactiveGray,
+                  color: CupertinoColors.quaternaryLabel,
                   borderRadius: BorderRadius.circular(30),
-                  minSize: 60,
+                  minSize: 30,
                   child: SizedBox(
+                    height: 55,
                     child: Center(
-                      child: Icon(CupertinoIcons.right_chevron),
+                      child: Icon(CupertinoIcons.right_chevron, color: CupertinoColors.label,),
                     ),
                   )
                   ))
