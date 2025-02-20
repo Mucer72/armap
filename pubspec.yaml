@@ -39,6 +39,9 @@ dependencies:
   google_fonts: ^6.2.1
   firebase_core: ^3.11.0
   cloud_firestore: ^5.6.3
+  flutter_dotenv: ^5.2.1
+  mapbox_maps_flutter: ^2.6.0
+  ar_flutter_plugin_updated: ^0.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

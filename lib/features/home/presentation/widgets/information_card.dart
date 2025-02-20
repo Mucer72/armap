@@ -93,7 +93,9 @@ class CarouselItem extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: CupertinoButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/inforPage');
+                  },
                   padding: EdgeInsets.zero,
                   color: CupertinoColors.quaternaryLabel,
                   borderRadius: BorderRadius.circular(30),

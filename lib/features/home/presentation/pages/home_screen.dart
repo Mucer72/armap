@@ -15,7 +15,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Scaffold(
+      body: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -37,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Minimap(),
         )
       ],
+    ),
+    resizeToAvoidBottomInset: false,
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ar_map_project/common/widgets/minimap.dart';
 
 class ArmapScreen extends StatefulWidget {
   const ArmapScreen({super.key});
-
   @override
   State<ArmapScreen> createState() => _ArmapScreenState();
 }
@@ -10,6 +10,16 @@ class ArmapScreen extends StatefulWidget {
 class _ArmapScreenState extends State<ArmapScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("AR map screen"),);
+    return Scaffold(
+      body: Stack(
+        children: [
+          Center(child: Text("This is the AR Map"),),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Minimap(),
+          )
+        ],
+      )
+    );
   }
 }

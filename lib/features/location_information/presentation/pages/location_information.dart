@@ -10,15 +10,20 @@ class InforPage extends StatefulWidget {
 class _InforPageState extends State<InforPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Column(
-      children: [
-        Text("this is the page to display infor and other things"),
-        CupertinoButton(
-          child: Text("to the ar map"), 
-          onPressed: (){
-            Navigator.pushNamed(context, '/armap');
-          })
-      ],
-    ),);
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("this is the page to display infor and other things"),
+          CupertinoButton(
+            child: Text("to the ar map"), 
+            onPressed: (){
+              Navigator.pushNamed(context, '/armap');
+            }
+          )
+        ],
+      )
+    );
   }
 }
