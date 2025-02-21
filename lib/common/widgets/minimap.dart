@@ -24,13 +24,9 @@ class _MinimapState extends State<Minimap> {
       child: ClipRRect(
         borderRadius: borderRadius,
         child: MapWidget(
-          mapOptions: MapOptions(
-            pixelRatio: 0.5,
-            constrainMode: ConstrainMode.HEIGHT_ONLY,
-          ),
           cameraOptions: CameraOptions(
             center: Point(
-              coordinates: Position(11.955944656594447, 108.44378138802631)),
+              coordinates: Position(11.955, 108.443)),
             zoom: 20,
             bearing: 0,
             pitch: 0

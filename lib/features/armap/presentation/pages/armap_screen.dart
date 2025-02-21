@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ar_map_project/common/widgets/minimap.dart';
+import 'package:ar_map_project/features/armap/presentation/widgets/ar_viewscene.dart';
 
 class ArmapScreen extends StatefulWidget {
   const ArmapScreen({super.key});
@@ -13,7 +14,7 @@ class _ArmapScreenState extends State<ArmapScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Center(child: Text("This is the AR Map"),),
+          Center(child: ArViewscene()),
           Align(
             alignment: Alignment.bottomCenter,
             child: Minimap(),
