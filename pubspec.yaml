@@ -42,6 +42,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   mapbox_maps_flutter: ^2.6.0
   ar_flutter_plugin_updated: ^0.0.1
+  vector_math: ^2.1.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -76,6 +77,7 @@ flutter:
     - assets/data/
     - assets/fonts/
     - assets/icons/
+    - assets/3d_models/
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 

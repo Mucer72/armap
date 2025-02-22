@@ -4,8 +4,10 @@ import 'package:ar_flutter_plugin_updated/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin_updated/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin_updated/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
+import 'package:ar_flutter_plugin_updated/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin_updated/widgets/ar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math_64.dart';
 
 class ArViewscene extends StatefulWidget {
   const ArViewscene({super.key});
@@ -51,5 +53,19 @@ late ARSessionManager arSessionManager;
       showAnimatedGuide: false,
     );
     this.arObjectManager.onInitialize();
+    this.arObjectManager.addNode(
+      ARNode(
+        // type: NodeType.fileSystemAppFolderGLB,
+        // uri: 'arrow.glb',
+        // type: NodeType.webGLB,
+        // uri: "https://github.com/Mucer72/armap/raw/main/arrow.glb",
+        type: NodeType.localGLTF2,
+        uri: "assets/3d_models/scene.gltf",
+        scale: Vector3(1, 1, 1),
+        position: Vector3(0, 0, 0),
+        rotation: Vector4(0, 0, 0.0, 0.0),
+        eulerAngles: Vector3(0, 0, 0))
+    );
   }
+  
 }
