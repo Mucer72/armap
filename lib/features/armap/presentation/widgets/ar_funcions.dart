@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:ar_map_project/common/models/object_models.dart';
+import 'package:ar_map_project/common/services/mapbox_service.dart';
 
 class ARFs {
+  get http => null;
+  MapboxService mapService = MapboxService(accessToken: dotenv.env['MAPBOX_TOKEN']!);
   double degreesToRadians(num degrees) {
     return degrees * pi / 180.0;
   }
@@ -61,41 +66,11 @@ class ARFs {
     return rotationAngle;
   }
 
-  Future<List<double>> getElevationList(List<Position> points) async {
-    List<double> res = [];
-    String latlong = '';
-    for (Position l in points) {
-      String s = '${l.lat},${l.lng}|';
-      latlong += s;
-    }
-    latlong = latlong.substring(0, latlong.length - 1); // Remove the last '|'
-
-    final String url =
-    'https://maps.googleapis.com/maps/api/elevation/json?locations=$latlong&key=$APIKey';
-
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data['status'] == 'OK') {
-      final results = data['results'];
-      if (results != null) {
-      for (var i in results) {
-      final double elevation = i['elevation'].toDouble();
-      res.add(elevation);
-      }
-      return res; // Return the elevation data if everything is successful
-      }
-    }
-    }
-    // Throw an exception only if there are no results and the status is not 'OK'
-    throw Exception('Failed to calculate elevation difference');
-  }
-
-  Future<List<ARNode>> generateFullRoute(Vector3 anchor, double angle, List<Position> points, List<double> elevation, int currentStepIndex) async{
+  Future<List<ARNode>> generateFullRoute(Vector3 anchor, double angle, List<Position> points, int currentStepIndex) async{
     if (currentStepIndex >= points.length - 1) {
       return [];
     }
+    await mapService.getElevations(points);
     List<ARNode> nodes = [];
     Position start = points[currentStepIndex];
     Position end = points[currentStepIndex + 1];
@@ -104,7 +79,7 @@ class ARFs {
     Vector3 rotate = Vector3(rotateAngle, 0, 0);
     double d = calculateDistanceInMeters(start, end);
     int numPoints = (d / 3).ceil();
-    double elevationDifference = elevation[currentStepIndex+1]-elevation[currentStepIndex];
+    double elevationDifference = (end.alt!-start.alt!) as double;
     elevationDifference/=numPoints;
     double height = elevationDifference;
 
