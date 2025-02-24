@@ -78,6 +78,7 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/3d_models/
+    - .env
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 

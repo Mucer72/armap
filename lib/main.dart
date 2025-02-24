@@ -15,14 +15,13 @@ import 'package:ar_map_project/common/services/firestore_service.dart';
 
 import 'package:ar_map_project/features/home/presentation/pages/home_screen.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await dotenv.load();
+  await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  MapboxOptions.setAccessToken("pk.eyJ1IjoiMjExMTg0NSIsImEiOiJjbTM5Mng4Y2IwdXlxMnZzY3hyamNpNThmIn0.aYzd0SVdic0pzbvFFIuuug");
+  MapboxOptions.setAccessToken(dotenv.env['MAPBOX_TOKEN']!);
   runApp(
     MultiProvider( 
       providers: [

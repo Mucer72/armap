@@ -7,23 +7,17 @@ import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
 import 'package:ar_flutter_plugin_updated/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin_updated/widgets/ar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:vector_math/vector_math_64.dart';
-import 'ar_funcions.dart';
 
 class ArViewscene extends StatefulWidget {
-  final double degree;
-  final List<Position> points;
+  final List<ARNode> nodeList; 
 
-  const ArViewscene({super.key, required this.degree, required this.points});
+  const ArViewscene({super.key, required this.nodeList});
 
   @override
   State<ArViewscene> createState() => _ArViewsceneState();
 }
 
 class _ArViewsceneState extends State<ArViewscene> {
-ARFs arf = new ARFs();
-late List<ARNode> nodeList; 
 late ARObjectManager arObjectManager;
 late ARSessionManager arSessionManager;
 
@@ -59,18 +53,15 @@ late ARSessionManager arSessionManager;
       showAnimatedGuide: false,
     );
     this.arObjectManager.onInitialize();
-    List<double> elevation = await arf.getElevationList(widget.points);
-    nodeList = await arf.generateFullRoute(Vector3(0, 0, 0), widget.degree, widget.points, elevation, 0);
-    nodeList.last.uri='des.glb';
-    loadObjects(nodeList);
-    //arObjectManager.addNode(controller.Controller().arrowNode(Vector3(0.5, 0.5, 0.5), Vector3(10, 0.5, 0.5)));
+    widget.nodeList.last.uri='des.glb';
+    loadObjects(widget.nodeList);
     this.arObjectManager.onNodeTap = onNodeTapped;
   }
   
   Future<void> onNodeTapped(List<String> nodes) async {
     for(var i in nodes)
     {
-      if (i == nodeList.last.name) { // Check if tapped node is the last one (index = length - 1)
+      if (i == widget.nodeList.last.name) { // Check if tapped node is the last one (index = length - 1)
 
         showDialog<void>(
           context: context,

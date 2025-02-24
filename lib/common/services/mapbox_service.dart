@@ -15,7 +15,7 @@ class MapboxService {
   }) async {
     // Tạo URL yêu cầu Directions API
     final url = Uri.parse(
-      'https://api.mapbox.com/directions/v5/mapbox/$profile/${start.longitude},${start.latitude};${end.longitude},${end.latitude}'
+      'https://api.mapbox.com/directions/v5/mapbox/$profile/${start.lng},${start.lat};${end.lng},${end.lat}'
       '?geometries=polyline&access_token=$accessToken',
     );
 
