@@ -95,7 +95,7 @@ class ARFs {
     }
     List<ARNode> nextStepNodes = [];
     if (nodes.isNotEmpty) {
-      nextStepNodes = await generateFullRoute(nodes.last.position, angle, points, elevation, currentStepIndex + 1);
+      nextStepNodes = await generateFullRoute(nodes.last.position, angle, points, currentStepIndex + 1);
     }
     nodes.removeAt(nodes.length-1);
     nodes.addAll(nextStepNodes);
