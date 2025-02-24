@@ -7,17 +7,23 @@ import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
 import 'package:ar_flutter_plugin_updated/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin_updated/widgets/ar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'ar_funcions.dart';
 
 class ArViewscene extends StatefulWidget {
-  const ArViewscene({super.key});
+  final double degree;
+  final List<Position> points;
+
+  const ArViewscene({super.key, required this.degree, required this.points});
 
   @override
   State<ArViewscene> createState() => _ArViewsceneState();
 }
 
 class _ArViewsceneState extends State<ArViewscene> {
-  
+ARFs arf = new ARFs();
+late List<ARNode> nodeList; 
 late ARObjectManager arObjectManager;
 late ARSessionManager arSessionManager;
 
@@ -29,7 +35,7 @@ late ARSessionManager arSessionManager;
   @override
   void dispose() {
     super.dispose();
-    this.arSessionManager.dispose();
+    arSessionManager.dispose();
   }
 
   @override
@@ -37,12 +43,12 @@ late ARSessionManager arSessionManager;
     return ARView(onARViewCreated: onARViewCreated);
   }
 
-  void onARViewCreated(
+  Future<void> onARViewCreated(
     ARSessionManager arSessionManager,
     ARObjectManager arObjectManager,
     ARAnchorManager arAnchorManager,
     ARLocationManager arLocationManager
-  ){
+  ) async {
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
     this.arSessionManager.onInitialize(
@@ -53,19 +59,39 @@ late ARSessionManager arSessionManager;
       showAnimatedGuide: false,
     );
     this.arObjectManager.onInitialize();
-    this.arObjectManager.addNode(
-      ARNode(
-        // type: NodeType.fileSystemAppFolderGLB,
-        // uri: 'arrow.glb',
-        // type: NodeType.webGLB,
-        // uri: "https://github.com/Mucer72/armap/raw/main/arrow.glb",
-        type: NodeType.localGLTF2,
-        uri: "assets/3d_models/scene.gltf",
-        scale: Vector3(1, 1, 1),
-        position: Vector3(0, 0, 0),
-        rotation: Vector4(0, 0, 0.0, 0.0),
-        eulerAngles: Vector3(0, 0, 0))
-    );
+    List<double> elevation = await arf.getElevationList(widget.points);
+    nodeList = await arf.generateFullRoute(Vector3(0, 0, 0), widget.degree, widget.points, elevation, 0);
+    nodeList.last.uri='des.glb';
+    loadObjects(nodeList);
+    //arObjectManager.addNode(controller.Controller().arrowNode(Vector3(0.5, 0.5, 0.5), Vector3(10, 0.5, 0.5)));
+    this.arObjectManager.onNodeTap = onNodeTapped;
   }
   
+  Future<void> onNodeTapped(List<String> nodes) async {
+    for(var i in nodes)
+    {
+      if (i == nodeList.last.name) { // Check if tapped node is the last one (index = length - 1)
+
+        showDialog<void>(
+          context: context,
+          builder: (BuildContext context) =>
+              const AlertDialog(content: Text('Show infor of the building')),
+        );
+      } else {
+        //this.arSessionManager.onError("Tapped arrow node");
+      }
+    }
+  }
+
+  Future<void> loadObjects(List<ARNode> nodeList) async {
+    for (ARNode i in nodeList) {
+      arObjectManager.addNode(i);
+    }
+  }
+  Future<void> removeObjects(List<ARNode> nodeList) async {
+    for (ARNode i in nodeList) {
+      arObjectManager.removeNode(i);
+    }
+  }
+
 }
