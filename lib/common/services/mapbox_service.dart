@@ -6,34 +6,20 @@ class MapboxService {
   final String accessToken;
 
   MapboxService({required this.accessToken});
-
-  // Hàm lấy danh sách Position dọc theo tuyến đường
   Future<List<Position>> getRoutePositions({
     required Position start,
     required Position end,
-    String profile = 'driving', // driving, walking, cycling
+    String profile = 'walking',
   }) async {
-    // Tạo URL yêu cầu Directions API
     final url = Uri.parse(
       'https://api.mapbox.com/directions/v5/mapbox/$profile/${start.lng},${start.lat};${end.lng},${end.lat}'
       '?geometries=polyline&access_token=$accessToken',
     );
-
-    // Gửi yêu cầu HTTP
     final response = await http.get(url);
-
-    // Kiểm tra kết quả trả về
     if (response.statusCode == 200) {
-      // Parse JSON
       final data = jsonDecode(response.body);
-
-      // Lấy geometry (encoded polyline)
       final geometry = data['routes'][0]['geometry'];
-
-      // Giải mã polyline để lấy danh sách tọa độ
       final coordinates = _decodePolyline(geometry);
-
-      // Chuyển đổi thành danh sách Position
       return coordinates
           .map((coord) => Position(coord[1],coord[0],))
           .toList();
@@ -42,7 +28,6 @@ class MapboxService {
     }
   }
 
-  // Hàm giải mã polyline
   List<List<double>> _decodePolyline(String encoded) {
     final List<List<double>> points = [];
     int index = 0, len = encoded.length;
