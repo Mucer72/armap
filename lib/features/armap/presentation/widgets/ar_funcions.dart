@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:ar_map_project/common/models/object_models.dart';
@@ -10,7 +9,7 @@ import 'package:ar_map_project/common/services/mapbox_service.dart';
 
 class ARFs {
   get http => null;
-  MapboxService mapService = MapboxService(accessToken: dotenv.env['MAPBOX_TOKEN']!);
+  MapboxService mapService = MapboxService();
   double degreesToRadians(num degrees) {
     return degrees * pi / 180.0;
   }
@@ -91,6 +90,9 @@ class ARFs {
       Vector3 position = Vector3(x, y, z);
       height+=elevationDifference;
       ARNode node = ArrowNode(position, rotate);
+      if(kDebugMode){
+        debugPrint('ehhee' + node.position.toString()+'\n');
+      }
       nodes.add(node);
     }
     List<ARNode> nextStepNodes = [];

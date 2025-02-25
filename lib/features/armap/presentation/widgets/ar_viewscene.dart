@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:ar_flutter_plugin_updated/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin_updated/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin_updated/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin_updated/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
-import 'package:ar_flutter_plugin_updated/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin_updated/widgets/ar_view.dart';
 import 'package:flutter/material.dart';
 

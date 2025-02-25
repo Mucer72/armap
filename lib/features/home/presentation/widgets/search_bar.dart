@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:ar_map_project/common/utils/sizes.dart';
-import 'package:flutter/material.dart';
 
 class SearchBar extends StatefulWidget {
 

@@ -1,19 +1,19 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 class MapboxService {
-  final String accessToken;
-
-  MapboxService({required this.accessToken});
   Future<List<Position>> getRoutePositions({
     required Position start,
     required Position end,
     String profile = 'walking',
   }) async {
+    String? accessToken = dotenv.env['MAPBOX_TOKEN'];
     final url = Uri.parse(
       'https://api.mapbox.com/directions/v5/mapbox/$profile/${start.lng},${start.lat};${end.lng},${end.lat}'
-      '?geometries=polyline&access_token=$accessToken',
+      '?steps=true&geometries=polyline&access_token=$accessToken',
     );
     final response = await http.get(url);
     if (response.statusCode == 200) {
