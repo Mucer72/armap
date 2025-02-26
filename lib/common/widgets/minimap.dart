@@ -26,8 +26,8 @@ class _MinimapState extends State<Minimap> {
         child: MapWidget(
           cameraOptions: CameraOptions(
             center: Point(
-              coordinates: Position(11.955, 108.443)),
-            zoom: 20,
+              coordinates: Position(108.443, 11.955)),
+            zoom: 15,
             bearing: 0,
             pitch: 0
           ),

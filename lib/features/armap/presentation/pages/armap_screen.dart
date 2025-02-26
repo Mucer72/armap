@@ -1,4 +1,5 @@
 import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ar_map_project/common/widgets/minimap.dart';
 import 'package:ar_map_project/features/armap/presentation/widgets/ar_viewscene.dart';
@@ -13,7 +14,6 @@ class ArmapScreen extends StatefulWidget {
 }
 
 class _ArmapScreenState extends State<ArmapScreen> {
-  MapboxService mapService = MapboxService();
   ARFs arfunctions = ARFs();
   List<ARNode> nodes = [];
   List<Position> points = [];
@@ -24,10 +24,15 @@ class _ArmapScreenState extends State<ArmapScreen> {
     }
 
   Future<List<ARNode>> getNodes() async{
-    points = await mapService.getRoutePositions(
+    points = await MapboxService.getRoutePositions(
       start: Position(108.440959, 11.941877), 
       end: Position(108.440509, 11.949308)
     );
+    if(kDebugMode){
+      for(var point in points){
+        debugPrint('load points '+ point.toString());
+      }
+    }
     return await arfunctions.generateFullRoute(Vector3(0,0,0), 0, points, 0);
   }
 

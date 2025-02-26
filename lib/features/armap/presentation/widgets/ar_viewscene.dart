@@ -4,6 +4,7 @@ import 'package:ar_flutter_plugin_updated/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin_updated/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
 import 'package:ar_flutter_plugin_updated/widgets/ar_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ArViewscene extends StatefulWidget {
@@ -22,6 +23,12 @@ late ARSessionManager arSessionManager;
   @override
   void initState(){
     super.initState();
+    if(kDebugMode){
+      for(var i in widget.nodeList){
+      debugPrint('node list loading');  
+      debugPrint(i.toString());
+    }
+    }
   }
 
   @override

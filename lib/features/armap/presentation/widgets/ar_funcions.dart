@@ -69,7 +69,6 @@ class ARFs {
     if (currentStepIndex >= points.length - 1) {
       return [];
     }
-    await mapService.getElevations(points);
     List<ARNode> nodes = [];
     Position start = points[currentStepIndex];
     Position end = points[currentStepIndex + 1];
@@ -91,7 +90,7 @@ class ARFs {
       height+=elevationDifference;
       ARNode node = ArrowNode(position, rotate);
       if(kDebugMode){
-        debugPrint('ehhee' + node.position.toString()+'\n');
+        debugPrint('last state ${node.position}\n');
       }
       nodes.add(node);
     }
