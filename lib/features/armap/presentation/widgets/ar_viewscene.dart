@@ -24,10 +24,7 @@ late ARSessionManager arSessionManager;
   void initState(){
     super.initState();
     if(kDebugMode){
-      for(var i in widget.nodeList){
-      debugPrint('node list loading');  
-      debugPrint(i.toString());
-    }
+      debugPrint('node list loading '+ widget.nodeList[0].position[0].toString());
     }
   }
 
@@ -58,7 +55,7 @@ late ARSessionManager arSessionManager;
       showAnimatedGuide: false,
     );
     this.arObjectManager.onInitialize();
-    widget.nodeList.last.uri='des.glb';
+    //widget.nodeList.last.uri='des.glb';
     loadObjects(widget.nodeList);
     this.arObjectManager.onNodeTap = onNodeTapped;
   }

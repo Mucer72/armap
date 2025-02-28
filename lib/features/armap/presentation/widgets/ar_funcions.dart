@@ -74,6 +74,7 @@ class ARFs {
     Position end = points[currentStepIndex + 1];
     double rotateAngle = calculateRotationAngle(start, end, angle);
     double alpha = pi - rotateAngle;
+    //double alpha = rotateAngle;
     Vector3 rotate = Vector3(rotateAngle, 0, 0);
     double d = calculateDistanceInMeters(start, end);
     int numPoints = (d / 3).ceil();
@@ -102,6 +103,4 @@ class ARFs {
     nodes.addAll(nextStepNodes);
     return nodes;
   }
-
-
 }

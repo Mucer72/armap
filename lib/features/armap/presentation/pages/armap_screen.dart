@@ -1,4 +1,5 @@
 import 'package:ar_flutter_plugin_updated/models/ar_node.dart';
+import 'package:ar_map_project/common/models/area_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ar_map_project/common/widgets/minimap.dart';
@@ -8,7 +9,8 @@ import 'package:ar_map_project/common/services/mapbox_service.dart';
 import 'package:ar_map_project/features/armap/presentation/widgets/ar_funcions.dart';
 import 'package:vector_math/vector_math_64.dart';
 class ArmapScreen extends StatefulWidget {
-  const ArmapScreen({super.key});
+  final double heading;
+  const ArmapScreen({super.key, required this.heading});
   @override
   State<ArmapScreen> createState() => _ArmapScreenState();
 }
@@ -17,6 +19,7 @@ class _ArmapScreenState extends State<ArmapScreen> {
   ARFs arfunctions = ARFs();
   List<ARNode> nodes = [];
   List<Position> points = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -30,10 +33,10 @@ class _ArmapScreenState extends State<ArmapScreen> {
     );
     if(kDebugMode){
       for(var point in points){
-        debugPrint('load points '+ point.toString());
+        debugPrint('load points '+ point.lng.toString()+' '+point.lat.toString()+' '+point.alt.toString());
       }
     }
-    return await arfunctions.generateFullRoute(Vector3(0,0,0), 0, points, 0);
+    return await arfunctions.generateFullRoute(Vector3(0,0,0), widget.heading, points, 0);
   }
 
   @override
@@ -44,7 +47,7 @@ class _ArmapScreenState extends State<ArmapScreen> {
         return Scaffold(
       body: Stack(
         children: [
-          Center(child: ArViewscene(nodeList: nodes)),
+          Center(child: ArViewscene(nodeList: snapshot.data!)),
           Align(
             alignment: Alignment.bottomCenter,
             child: Minimap(),

@@ -12,7 +12,8 @@ class AppRouter {
       case '/login':
         return MaterialPageRoute(builder: (_)=> const LoginScreen());
       case '/armap':
-        return MaterialPageRoute(builder: (_)=> const ArmapScreen());
+      final head = settings.arguments as double;
+        return MaterialPageRoute(builder: (_)=> ArmapScreen(heading: head));
       case '/inforPage':
         return MaterialPageRoute(builder: (_)=> const InforPage());
       default:
