@@ -45,6 +45,7 @@ dependencies:
   vector_math: ^2.1.4
   image: ^4.5.3
   flutter_compass: ^0.8.1
+  location: ^7.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
