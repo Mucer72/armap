@@ -1,7 +1,5 @@
 import 'package:ar_map_project/features/location_information/presentation/widgets/start_button.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 class InforPage extends StatefulWidget {
   const InforPage({super.key});

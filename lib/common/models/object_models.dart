@@ -6,7 +6,7 @@ class ArrowNode extends ARNode {
   ArrowNode(Vector3 position, Vector3 angle)
       : super(
           type: NodeType.localGLTF2,
-          uri: 'assets/3d_models/scene.gltf',
+          uri: 'assets/3d_models/arrow.gltf',
           scale: Vector3(0.3, 0.3, 0.3),
           position: position,
           rotation: Vector4(0.1, 0.0, 0.0, 0.0),

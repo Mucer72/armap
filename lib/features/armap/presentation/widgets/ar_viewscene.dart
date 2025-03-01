@@ -23,9 +23,6 @@ late ARSessionManager arSessionManager;
   @override
   void initState(){
     super.initState();
-    if(kDebugMode){
-      debugPrint('node list loading '+ widget.nodeList[0].position[0].toString());
-    }
   }
 
   @override

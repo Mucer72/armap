@@ -9,6 +9,8 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:ar_map_project/common/providers/location_heading_provider.dart';
 
 class StartButton extends StatefulWidget {
+  const StartButton({super.key});
+
   @override
   _StartButtonState createState() => _StartButtonState();
 }
@@ -34,6 +36,7 @@ class _StartButtonState extends State<StartButton> {
   }
 
   void _startListening() {
+    double fineTune = -4;
     Stream<LocationData> positionStream = loc.onLocationChanged.handleError((dynamic err) {
       if (err is PlatformException) {
         if(kDebugMode){
@@ -52,7 +55,7 @@ class _StartButtonState extends State<StartButton> {
 
     _headingSubscription = headingStream!.listen((event) {
       setState(() {
-        _latestHeading = ((event.heading!<1?event.heading!+360:event.heading)!-1).floorToDouble();
+        _latestHeading = (((event.heading!+fineTune)<1?(event.heading!+fineTune)+360:(event.heading!+fineTune))-1).floorToDouble();
       });
     });
   }

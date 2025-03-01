@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -9,10 +8,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:ar_map_project/common/models/route_model.dart';
 import 'package:ar_map_project/common/models/other_models.dart';
-import 'package:image/image.dart' as img;
+
+import 'package:image/image.dart';
 
 class MapboxService {
-  static const int zoomLevel = 14;
+  static const int zoomLevel = 15;
   static String? accessToken = dotenv.env['MAPBOX_TOKEN'];
 
   static Future<List<Position>> getRoutePositions({
@@ -37,9 +37,6 @@ class MapboxService {
       for (int i = 0; i < result.length; i++) {
         double? ele = await getElevation(result[i]);
         result[i] = Position(result[i].lng, result[i].lat, ele);
-        if (kDebugMode) {
-          debugPrint('Check: ${result[i].lng}, ${result[i].lat}, $ele');
-        }
       }
 
       // List<double> elelist = await getElevationList(result);
@@ -85,9 +82,6 @@ class MapboxService {
     final file = File(filePath);
 
     if (await file.exists()) {
-      if (kDebugMode) {
-        debugPrint("Tile ${tile.z}/${tile.x}/${tile.y} đã tồn tại ở $filePath, bỏ qua tải xuống.");
-      }
       return;
     }
 
@@ -97,15 +91,7 @@ class MapboxService {
     if (response.statusCode == 200) {
       await file.create(recursive: true);
       await file.writeAsBytes(response.bodyBytes);
-      if (kDebugMode) {
-        debugPrint(url);
-        debugPrint("Tile đã tải xuống: $filePath - Kích thước: ${response.bodyBytes.length} bytes");
-      }
-    } else {
-      if (kDebugMode) {
-        debugPrint("Lỗi tải tile ${tile.z}/${tile.x}/${tile.y}: ${response.statusCode}");
-      }
-    }
+    } 
   }
   static Future<void> checkFileAccess(TileCoordinate tile) async {
   final directory = await getApplicationDocumentsDirectory();
@@ -128,41 +114,50 @@ class MapboxService {
 }
   static Future<double?> getElevation(Position position) async {
     final tile = _latLngToTile(position);
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = "${directory.absolute.path}/tiles/${tile.z}_${tile.x}_${tile.y}.png";
-    final file = File(filePath);
     await _downloadTile(tile);
     await checkFileAccess(tile);
-    Uint8List bytes = await file.readAsBytes();
+    final bytes = await convertPngToBytes('${tile.z}_${tile.x}_${tile.y}');
     return _decodeElevation(bytes, position, tile);
   }
 
-  static double _decodeElevation(Uint8List bytes, Position position, TileCoordinate tile) {
-  int tileSize = 512;
+static Future<Uint8List?> convertPngToBytes(String fileName) async {
 
-  double latRad = position.lat * math.pi / 180;
-  num n = math.pow(2, tile.z);
-  double x = ((position.lng + 180.0) / 360.0 * n * tileSize) % tileSize;
-  double y = ((1 - math.log(math.tan(latRad) + 1 / math.cos(latRad)) / math.pi) / 2.0 * n * tileSize) % tileSize;
+  debugPrint("decoding image");
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File("${directory.absolute.path}/tiles/$fileName.png");
+  final image = decodeImage(await file.readAsBytes());
+  return image?.getBytes();
+}
 
-  int px = x.floor().clamp(0, tileSize - 1);
-  int py = y.floor().clamp(0, tileSize - 1);
-  int pixelIndex = (py * tileSize + px) * 4;
+  static double _decodeElevation(Uint8List? bytes, Position position, TileCoordinate tile) {
+    int tileSize = 256;
 
-  if (pixelIndex + 3 >= bytes.length) {
-    debugPrint("Pixel index out of range: $pixelIndex (max: ${bytes.length})");
-    return 0.0;
+    double latRad = position.lat * math.pi / 180;
+    num n = math.pow(2, tile.z);
+    double x = ((position.lng + 180.0) / 360.0 * n * tileSize) % tileSize;
+    double y = ((1 - math.log(math.tan(latRad) + 1 / math.cos(latRad)) / math.pi) / 2.0 * n * tileSize) % tileSize;
+
+    int px = x.floor().clamp(0, tileSize - 1);
+    int py = y.floor().clamp(0, tileSize - 1);
+    int pixelIndex = (px * tileSize + py) * 4;
+
+    if (pixelIndex + 3 >= bytes!.length) {
+      debugPrint("Pixel index out of range: $pixelIndex (max: ${bytes!.length})");
+      return 0.0;
+    }
+
+    int r = bytes[pixelIndex];
+    int g = bytes[pixelIndex + 1];
+    int b = bytes[pixelIndex + 2];
+
+    debugPrint("RGB values: r=$r, g=$g, b=$b");
+
+    double elevation = -10000 + ((r * 256 * 256 + g * 256 + b) * 0.1);
+
+    debugPrint(" Độ cao tại (${position.lng}, ${position.lat}): $elevation m");
+    return elevation;
   }
 
-  int r = bytes[pixelIndex];
-  int g = bytes[pixelIndex + 1];
-  int b = bytes[pixelIndex + 2];
-
-  double elevation = (r * 256 + g + b / 256.0) - 32768.0;
-
-  debugPrint(" Độ cao tại (${position.lng}, ${position.lat}): $elevation m");
-  return elevation;
-}
 
 //##pacth
 static Future<List<double>> getElevationList(List<Position> points) async {
@@ -188,11 +183,10 @@ static Future<List<double>> getElevationList(List<Position> points) async {
       final double elevation = i['elevation'].toDouble();
       res.add(elevation);
       }
-      return res; // Return the elevation data if everything is successful
+      return res;
       }
     }
     }
-    // Throw an exception only if there are no results and the status is not 'OK'
     throw Exception('Failed to calculate elevation difference');
   }
 

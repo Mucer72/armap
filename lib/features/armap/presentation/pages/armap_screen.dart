@@ -34,10 +34,6 @@ class _ArmapScreenState extends State<ArmapScreen> {
     final currentPosition = locHeadProvider.currentPosition; // Access currentPosition
     final currentHeading = locHeadProvider.currentHeading;
     if (currentPosition == null) {
-    // Handle the case where currentPosition is null
-      if(kDebugMode){
-        debugPrint("Current position is null, cannot get route.");
-      }
       return []; // Or throw an exception, or return a default value
     }
 
@@ -45,11 +41,6 @@ class _ArmapScreenState extends State<ArmapScreen> {
       start: currentPosition, 
       end: Position(108.427716, 11.969926)
     );
-    if(kDebugMode){
-      for(var point in points){
-        debugPrint('load points '+ point.lng.toString()+' '+point.lat.toString()+' '+point.alt.toString());
-      }
-    }
     return await arfunctions.generateFullRoute(Vector3(0,0,0), currentHeading, points, 0);
   }
 

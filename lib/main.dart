@@ -7,6 +7,7 @@ import 'package:ar_map_project/app_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 import 'package:ar_map_project/common/themes/normal_theme.dart';
@@ -17,12 +18,15 @@ import 'package:ar_map_project/common/providers/location_heading_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.locationWhenInUse.request();
+  await Permission.camera.request();
+  await Permission.calendarFullAccess.request();
+  await Permission.sensors.request();
   await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   MapboxOptions.setAccessToken(dotenv.env['MAPBOX_TOKEN']!);
-
   
   runApp(
     MultiProvider( 

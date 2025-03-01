@@ -4,13 +4,34 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 class Minimap extends StatefulWidget {
   const Minimap({super.key});
-
   @override
   State<Minimap> createState() => _MinimapState();
 }
 
 class _MinimapState extends State<Minimap> {
+
   BorderRadiusGeometry borderRadius = BorderRadius.vertical(top: Radius.circular(ScreenDimensions.width/2.3));
+  MapboxMap? mapboxMap;
+
+  _onMapCreated(MapboxMap mapboxMap){
+    this.mapboxMap = mapboxMap;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mapboxMap?.location.updateSettings(
+      LocationComponentSettings(
+        enabled: true,
+        locationPuck: LocationPuck(
+          locationPuck3D: LocationPuck3D(
+            modelUri: 'assets/3d_models/puck.gltf'
+          )
+        )
+      )
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,6 +45,7 @@ class _MinimapState extends State<Minimap> {
       child: ClipRRect(
         borderRadius: borderRadius,
         child: MapWidget(
+          onMapCreated: _onMapCreated,
           cameraOptions: CameraOptions(
             center: Point(
               coordinates: Position(108.443, 11.955)),
