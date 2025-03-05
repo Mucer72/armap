@@ -13,8 +13,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:ar_map_project/common/themes/normal_theme.dart';
 import 'package:ar_map_project/common/utils/sizes.dart';
 import 'package:ar_map_project/common/services/firestore_service.dart';
-import 'package:ar_map_project/features/home/presentation/pages/home_screen.dart';
 import 'package:ar_map_project/common/providers/location_heading_provider.dart';
+import 'package:ar_map_project/features/home/presentation/pages/home_screen.dart';
+import 'package:ar_map_project/features/login/presentation/pages/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: NormalTheme.lightTheme,
       themeMode: ThemeMode.system,
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

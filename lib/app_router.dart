@@ -7,10 +7,10 @@ import 'package:ar_map_project/features/location_information/presentation/pages/
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch(settings.name){
-      case '/':
+      case '/home':
         return MaterialPageRoute(builder: (_)=> const HomeScreen());
       case '/login':
-        return MaterialPageRoute(builder: (_)=> const LoginScreen());
+        return MaterialPageRoute(builder: (_)=> LoginScreen());
       case '/armap':
         return MaterialPageRoute(builder: (_)=> ArmapScreen());
       case '/inforPage':

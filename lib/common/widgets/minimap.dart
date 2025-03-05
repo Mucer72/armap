@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:ar_map_project/common/utils/sizes.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:ar_map_project/common/widgets/minimap_functions.dart';
 
 class Minimap extends StatefulWidget {
   const Minimap({super.key});
@@ -26,7 +27,8 @@ class _MinimapState extends State<Minimap> {
         enabled: true,
         locationPuck: LocationPuck(
           locationPuck3D: LocationPuck3D(
-            modelUri: 'assets/3d_models/puck.gltf'
+            modelUri: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Embedded/Duck.gltf',
+            modelScale: [1,1,1]
           )
         )
       )
@@ -34,6 +36,16 @@ class _MinimapState extends State<Minimap> {
   }
   @override
   Widget build(BuildContext context) {
+    MapWidget mapWidget = MapWidget(
+      onMapCreated: _onMapCreated,
+      cameraOptions: CameraOptions(
+            center: Point(
+              coordinates: Position(108.443, 11.955)),
+            zoom: 15,
+            bearing: 0,
+            pitch: 0
+          ),
+      );
     return Container(
       margin: EdgeInsets.only(top: 21),
       height: ScreenDimensions.height*0.3,
@@ -44,16 +56,7 @@ class _MinimapState extends State<Minimap> {
       ),
       child: ClipRRect(
         borderRadius: borderRadius,
-        child: MapWidget(
-          onMapCreated: _onMapCreated,
-          cameraOptions: CameraOptions(
-            center: Point(
-              coordinates: Position(108.443, 11.955)),
-            zoom: 15,
-            bearing: 0,
-            pitch: 0
-          ),
-        )
+        child: mapWidget,
       ),
     );
   }
