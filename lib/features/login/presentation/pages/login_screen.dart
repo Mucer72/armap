@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ar_map_project/common/utils/sizes.dart';
+import 'package:ar_map_project/common/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,14 +13,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthService _authService = AuthService();
 
   Future<void> _login() async {
     setState(() => _isLoading = true);
     try {
-      await _auth.signInWithEmailAndPassword(
-        email: _usernameController.text.trim(),
-        password: _passwordController.text.trim(),
+      await _authService.signInWithEmailAndPassword(
+        _usernameController.text.trim(), 
+        _passwordController.text.trim(),
       );
     } catch (e) {
       showCupertinoDialog(
@@ -30,7 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             CupertinoDialogAction(
               child: Text("OK"),
-              onPressed: () => Navigator.pop(context),
+              onPressed: ()async{
+                Navigator.pop(context);
+                await _authService.signInAnonymously();
+              },
             ),
           ],
         ),
