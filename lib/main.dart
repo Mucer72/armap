@@ -14,6 +14,11 @@ import 'package:ar_map_project/common/themes/normal_theme.dart';
 import 'package:ar_map_project/common/utils/sizes.dart';
 import 'package:ar_map_project/common/services/firestore_service.dart';
 import 'package:ar_map_project/common/providers/location_heading_provider.dart';
+import 'package:ar_map_project/common/providers/user_provider.dart';
+import 'package:ar_map_project/common/providers/area_provider.dart';
+import 'package:ar_map_project/common/providers/destination_provider.dart';
+import 'package:ar_map_project/common/providers/spot_provider.dart';
+import 'package:ar_map_project/common/providers/object_provider.dart';
 import 'package:ar_map_project/features/home/presentation/pages/home_screen.dart';
 import 'package:ar_map_project/features/login/presentation/pages/login_screen.dart';
 
@@ -42,7 +47,12 @@ Future<void> main() async {
           create: (_)=>ThemeProvider(),
         ),
         Provider<LocationHeadingProvider>(
-          create: (_)=>LocationHeadingProvider())
+          create: (_)=>LocationHeadingProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => AreaProvider()),
+        ChangeNotifierProvider(create: (context) => DestinationProvider()),
+        ChangeNotifierProvider(create: (context) => SpotProvider()),
+        ChangeNotifierProvider(create: (context) => ObjectProvider()),  
       ],
       child: const MyApp(), 
     ),

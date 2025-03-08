@@ -1,29 +1,21 @@
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
-class Destination {
-  final Position position;
-  final String name;
+class DestinationModel {
+  final int id;
+  final int area;
   final String imageUrl;
+  final String name;
+  final Position position;
 
-  Destination({
-    required this.position,
-    required this.name,
-    required this.imageUrl,
-  });
+  DestinationModel({required this.id, required this.area, required this.imageUrl,  required this.name, required this.position});
 
-  factory Destination.fromJson(Map<String, dynamic> json) {
-    return Destination(
-      position: Position.fromJson(json['position']),
+  factory DestinationModel.fromJson(Map<String, dynamic> json) {
+    return DestinationModel(
+      id: json['id'],
+      area: json['area'],
+      imageUrl: json['imageUrl'],
       name: json['name'],
-      imageUrl: json['image_url'],
+      position: json['position']
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'position': position.toJson(),
-      'name': name,
-      'image_url': imageUrl,
-    };
   }
 }
